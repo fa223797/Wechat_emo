@@ -1,0 +1,9 @@
+{
+  "navigationBarTitleText": "奇妙医生",
+  "navigationBarBackgroundColor": "#323232",
+  "navigationBarTextStyle": "white",
+  "backgroundColor": "#323232",
+  "backgroundTextStyle": "light",
+  "disableScroll": false,
+  "usingComponents": {}
+}

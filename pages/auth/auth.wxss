@@ -1,0 +1,99 @@
+/* pages/auth/auth.wxss */
+.container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(to bottom, #323232 0%, #3F3F3F 40%, #1C1C1C 150%), 
+  linear-gradient(to top, rgba(255,255,255,0.40) 0%, rgba(0,0,0,0.25) 200%);
+  padding: 30rpx;
+}
+
+.auth-modal {
+  width: 90%;
+  max-width: 600rpx;
+  background: linear-gradient(to bottom, #fff1eb 0%, #ace0f9 100%);
+  border-radius: 20rpx;
+  padding: 40rpx 30rpx;
+  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.1);
+}
+
+.auth-header {
+  text-align: center;
+  margin-bottom: 50rpx;
+}
+
+.logo {
+  width: 120rpx;
+  height: 120rpx;
+  margin-bottom: 20rpx;
+}
+
+.auth-title {
+  font-size: 36rpx;
+  color: #333;
+  font-weight: 500;
+  margin-bottom: 16rpx;
+}
+
+.auth-desc {
+  font-size: 28rpx;
+  color: #666;
+  margin-bottom: 40rpx;
+}
+
+.input-group {
+  margin-bottom: 40rpx;
+}
+
+.phone-input-wrap {
+  display: flex;
+  align-items: center;
+  border: 2rpx solid #e0e0e0;
+  border-radius: 8rpx;
+  padding: 20rpx;
+  background: #f9f9f9;
+}
+
+.prefix {
+  color: #333;
+  font-size: 28rpx;
+  margin-right: 20rpx;
+  padding-right: 20rpx;
+  border-right: 2rpx solid #e0e0e0;
+}
+
+.phone-input {
+  flex: 1;
+  font-size: 28rpx;
+  color: #333;
+}
+
+.error-tip {
+  font-size: 24rpx;
+  color: #ff4d4f;
+  margin-top: 12rpx;
+  padding-left: 20rpx;
+}
+
+.auth-btn {
+  width: 100% !important;
+  height: 110rpx;
+  line-height: 88rpx;
+  background: #07c160;
+  color: #fff;
+  font-size: 32rpx;
+  border-radius: 44rpx;
+  margin-top: 20rpx;
+  font-weight: normal;
+}
+
+.auth-btn.disabled {
+  background: #9be6b4;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+button[disabled] {
+  background: #9be6b4 !important;
+  color: rgba(255, 255, 255, 0.9) !important;
+}

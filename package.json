@@ -1,0 +1,9 @@
+{
+  "scripts": {
+    "optimize-images": "imagemin pages/ai/image/* --out-dir=pages/ai/image/optimized"
+  },
+  "devDependencies": {
+    "imagemin-cli": "^7.0.0",
+    "imagemin-pngquant": "^9.0.2"
+  }
+} 

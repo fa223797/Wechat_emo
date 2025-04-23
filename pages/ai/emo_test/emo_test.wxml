@@ -1,0 +1,331 @@
+<!-- pages/ai/emo_test.wxml -->
+
+<view class="container">
+  <view class="container-mask"></view>
+  <view class="content-wrapper">
+    <!-- 顶部标题,始终显示 -->
+    <view class="type-header">
+      <text>试题来自中国心理卫生评定量表手册</text>
+      <text class="type-subtitle">请认真阅读测试说明</text>
+    </view>
+
+    <!-- 加载中状态 -->
+    <view wx:if="{{loading}}" class="loading">
+      <view class="loading-content">
+        <view wx:if="{{!aiProcessing}}" class="normal-loading">
+          <view class="spinner"></view>
+          <text class="loading-text">{{loadingText}}</text>
+        </view>
+        
+        <view wx:else class="ai-processing">
+          <view class="progress-container">
+            <view class="progress-bar">
+              <view class="progress-inner" style="width: {{progressPercent}}%"></view>
+            </view>
+            <text class="progress-text">{{progressPercent}}%</text>
+          </view>
+          <text class="loading-text">{{loadingText}}</text>
+        </view>
+      </view>
+    </view>
+    
+    <!-- 量表类型选择 -->
+    <view wx:elif="{{showTypeSelect}}" class="type-list">
+      <!-- 添加专利图片 -->
+      <view class="patent-image-container">
+        <image src="/pages/ai/image/zhuanli.png" class="patent-image"></image>
+      </view>
+
+      <!-- 水平排列三个测试项目 -->
+      <view class="type-column">
+        <view 
+          class="type-item"
+          data-type="depression"
+          bindtap="handleTypeSelect"
+        >
+          Beck抑郁问卷
+        </view>
+        
+        <view 
+          class="type-item"
+          data-type="dawurenge"
+          bindtap="handleTypeSelect"
+        >
+          大五人格测验
+        </view>
+        
+        <view 
+          class="type-item"
+          data-type="scl90"
+          bindtap="handleTypeSelect"
+        >
+          SCL-90自评
+        </view>
+      </view>
+    </view>
+    
+    <!-- 在问题回答界面之前添加性别选择界面 -->
+    <view wx:elif="{{showGenderSelect}}" class="gender-select-container">
+      <view class="gender-header">
+        <text class="gender-title">大五人格测试</text>
+        <text class="gender-subtitle">请先选择您的性别</text>
+      </view>
+      
+      <view class="gender-options">
+        <view 
+          class="gender-option {{selectedGender === '男' ? 'selected' : ''}}" 
+          bindtap="handleGenderSelect" 
+          data-gender="男"
+        >
+          <image src="/pages/ai/image/man.png" class="gender-image"></image>
+          <text class="gender-text">男</text>
+        </view>
+        
+        <view 
+          class="gender-option {{selectedGender === '女' ? 'selected' : ''}}" 
+          bindtap="handleGenderSelect" 
+          data-gender="女"
+        >
+          <image src="/pages/ai/image/wman.png" class="gender-image"></image>
+          <text class="gender-text">女</text>
+        </view>
+      </view>
+      
+      <button 
+        class="gender-confirm-btn {{!selectedGender ? 'disabled' : ''}}" 
+        bindtap="confirmGenderSelection" 
+        disabled="{{!selectedGender}}"
+      >
+        确认并开始测试
+      </button>
+    </view>
+    
+    <!-- 问题回答界面 -->
+    <view wx:elif="{{!showResult}}" class="question-container">
+      <block wx:if="{{testInstructions}}">
+        <view class="test-header">
+          <view class="test-title">{{testInstructions.title}}</view>
+          <view class="test-instructions">{{testInstructions.instructions}}</view>
+          <view class="test-scoring">{{testInstructions.scoring}}</view>
+        </view>
+
+        <view class="question">
+          <view class="question-header">
+            <text class="question-number">问题 {{currentQuestionIndex + 1}}/{{questions.length}}</text>
+            <view class="progress-dots">
+              <view 
+                wx:for="{{questions}}" 
+                wx:key="index" 
+                class="progress-dot {{currentQuestionIndex === index ? 'active' : ''}} {{userAnswers[index] !== null ? 'completed' : ''}}"
+              ></view>
+            </view>
+          </view>
+          
+          <text class="question-text">{{questions[currentQuestionIndex].question}}</text>
+          
+          <view class="options">
+            <view 
+              wx:for="{{questionOptions}}"
+              wx:key="index"
+              wx:for-item="option"
+              class="option {{selectedOption === index ? 'selected' : ''}}"
+              data-score="{{index}}"
+              bindtap="handleOptionSelect"
+            >
+              <view class="option-circle {{selectedOption === index ? 'selected' : ''}}">{{index}}</view>
+              <view class="option-text">{{option}}</view>
+            </view>
+          </view>
+          
+          <view class="navigation-buttons">
+            <button 
+              wx:if="{{currentQuestionIndex > 0}}" 
+              class="nav-button prev-button" 
+              bindtap="handlePrevQuestion"
+            >上一题</button>
+            <button 
+              class="nav-button next-button {{selectedOption === null ? 'disabled' : ''}}" 
+              bindtap="{{selectedOption !== null ? 'handleNextQuestion' : ''}}"
+              disabled="{{selectedOption === null}}"
+            >{{currentQuestionIndex < questions.length - 1 ? '下一题' : '提交测评'}}</button>
+          </view>
+        </view>
+      </block>
+    </view>
+    
+    <!-- 结果展示界面 -->
+    <view wx:else class="result-container">
+      <!-- 结果标题固定在顶部 -->
+      <view class="result-header">
+        <text>专业测评结果</text>
+      </view>
+      
+      <!-- 可滚动的结果内容 -->
+      <view class="result-content">
+        <view class="result-section" wx:if="{{showResult}}">
+          <view class="result-header">
+            <text class="result-title">{{result.test_name}}</text>
+            <text class="result-date">测试时间: {{result.test_time}}</text>
+          </view>
+          
+          <!-- 针对抑郁症测试的结果显示 -->
+          <block wx:if="{{testType === 'depression'}}">
+            <view class="result-box">
+              <text class="result-score">总分: {{result.total_score}}</text>
+              <text class="result-level">{{result.result}}</text>
+              <text class="result-explain">{{result.explanation}}</text>
+              <text class="result-suggest">{{result.suggestion}}</text>
+            </view>
+          </block>
+          
+          <!-- 针对大五人格测试的结果显示 -->
+          <block wx:if="{{testType === 'dawurenge'}}">
+            <view class="result-box">
+              <text class="result-score">测试对象: {{result.gender}}性</text>
+              
+              <!-- 显示主维度得分 -->
+              <view class="dimension-scores">
+                <text class="dimension-title">维度得分:</text>
+                <text wx:if="{{result.formatted_dimensions}}" class="dimension-data">{{result.formatted_dimensions}}</text>
+              </view>
+              
+              <!-- 显示维度详情 -->
+              <view class="dimension-details">
+                <!-- 主维度 -->
+                <block wx:for="{{result.results}}" wx:key="index" wx:for-index="dimKey" wx:for-item="dimValue">
+                  <view class="dimension-item">
+                    <text class="dimension-name">{{dimKey}}维度 {{getDimensionName(dimKey)}} [{{dimValue.converted_score}}分]</text>
+                    <text class="dimension-desc">{{dimValue.explanation}}</text>
+                    
+                    <!-- 子维度 -->
+                    <view class="sub-dimensions">
+                      <block wx:if="{{result.dimension_results && result.dimension_results[dimKey]}}" 
+                             wx:for="{{result.dimension_results[dimKey]}}" 
+                             wx:key="dimension" 
+                             wx:for-item="subDim">
+                        <view class="sub-dimension-item">
+                          <text class="sub-dimension-name">{{subDim.dimension}} {{getSubDimensionName(subDim.dimension)}} [{{subDim.converted_score}}分]</text>
+                          <text class="sub-dimension-desc">{{subDim.explanation}}</text>
+                        </view>
+                      </block>
+                    </view>
+                  </view>
+                </block>
+              </view>
+              
+              <!-- 添加AI报告显示部分 -->
+              <view class="result-block" wx:if="{{result.ai_report}}">
+                <view class="block-title">AI心理评估报告</view>
+                <text user-select="true" class="ai-report">{{result.ai_report}}</text>
+              </view>
+            </view>
+          </block>
+          
+          <!-- 修改SCL-90结果展示区块 -->
+          <block wx:if="{{testType === 'scl90'}}">
+            <view class="result-section">
+              <view class="result-title">专业测评结果</view>
+              
+              <view class="result-time">
+                SCL-90症状自评量表测试时间: {{result.test_time}}
+              </view>
+              
+              <!-- 总体评估指标 -->
+              <view class="result-block">
+                <view class="block-title">总体评估指标</view>
+                
+                <view class="score-item">
+                  <text class="score-label">总症状指数(GSI):</text>
+                  <text class="score-value">{{result.report.global_indices['总症状指数']}}</text>
+                </view>
+                
+                <view class="score-item">
+                  <text class="score-label">阳性项目数(PST):</text>
+                  <text class="score-value">{{result.report.global_indices['阳性项目数']}}</text>
+                </view>
+                
+                <view class="score-item">
+                  <text class="score-label">阳性症状痛苦水平(PSDI):</text>
+                  <text class="score-value">{{result.report.global_indices['阳性症状痛苦水平']}}</text>
+                </view>
+              </view>
+              
+              <!-- 因子得分详情 -->
+              <view class="result-block">
+                <view class="block-title">因子得分详情</view>
+                
+                <block wx:for="{{result.formatted_results}}" wx:key="index" wx:if="{{index > 2 && index < result.formatted_results.length-1}}">
+                  <view class="factor-item">
+                    <text>{{item}}</text>
+                  </view>
+                </block>
+              </view>
+              
+              <!-- 需要关注的维度 -->
+              <view class="result-block" wx:if="{{result.report.attention_dimensions}}">
+                <view class="block-title">需要关注的问题维度</view>
+                <view class="attention-dimensions">
+                  {{result.report.attention_dimensions}}
+                </view>
+                <view class="advice">
+                  建议咨询专业心理医生获取进一步帮助
+                </view>
+              </view>
+              
+              <!-- AI心理评估报告 -->
+              <view class="result-block">
+                <view class="block-title">AI心理评估报告</view>
+                <text user-select="true" class="ai-report">{{result.ai_report}}</text>
+              </view>
+            </view>
+          </block>
+          
+          <!-- 通用注意事项和结束语 -->
+          <view class="cautions">
+            <text class="caution-title">注意事项:</text>
+            <view wx:for="{{result.cautions}}" wx:key="index" class="caution-item">
+              <text>{{index + 1}}. {{item}}</text>
+            </view>
+          </view>
+          
+          <text class="closing-message">{{result.closing_message}}</text>
+          
+          <button class="restart-btn" bindtap="restartTest">重新测试</button>
+        </view>
+
+        <!-- SCL-90测试结果特殊显示 -->
+        <block wx:if="{{testType === 'scl90' && testComplete}}">
+          <!-- SCL-90特有的结果展示方式 -->
+          <view class="scl90-results">
+            <!-- 结果内容根据reportContent渲染 -->
+            <block wx:for="{{reportContent}}" wx:key="title">
+              <view class="report-section">
+                <view class="section-title">{{item.title}}</view>
+                
+                <!-- 如果是AI分析报告 -->
+                <block wx:if="{{item.content}}">
+                  <text class="ai-report">{{item.content}}</text>
+                </block>
+                
+                <!-- 如果是带有项目的部分 -->
+                <block wx:elif="{{item.items}}">
+                  <view class="item-list">
+                    <block wx:for="{{item.items}}" wx:for-item="subItem" wx:key="label">
+                      <view class="result-item">
+                        <text class="item-label">{{subItem.label}}</text>
+                        <text class="item-value">{{subItem.value}}</text>
+                        <block wx:if="{{subItem.explanation}}">
+                          <text class="item-explanation">{{subItem.explanation}}</text>
+                        </block>
+                      </view>
+                    </block>
+                  </view>
+                </block>
+              </view>
+            </block>
+          </view>
+        </block>
+      </view>
+    </view>
+  </view>
+</view>

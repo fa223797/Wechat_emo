@@ -1,0 +1,286 @@
+/* pages/ai/chat_emo/chat_emo.wxss */
+
+/* 容器样式 - 整体页面布局 */
+.container {
+  height: 100vh; /* 使用视窗高度作为容器高度 */
+  display: flex; /* 弹性布局 */
+  flex-direction: column; /* 垂直布局 */
+  background-image: linear-gradient(to top, #d8fdf2 0%,#fdebf1 55%, #f7c7ed 100%);
+  background-size: cover; /* 背景图片大小 */
+  background-position: center; /* 背景图片位置 */
+}
+
+/* 添加欢迎界面样式 */
+.welcome-section {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40rpx;
+  z-index: 10;
+  width: 85%;
+}
+
+.welcome-icon {
+  width: 150rpx;
+  height: 150rpx;
+  margin-bottom: 50rpx;
+}
+
+.welcome-text {
+  text-align: center;
+  font-size: 27rpx;
+  color: #4c4c4c;
+  line-height: 1.8;
+  padding: 0 40rpx;
+}
+
+/* 顶部栏优化 - 动态适配状态栏 */
+.top-bar {
+  background: rgba(152, 151, 151, 0.5);
+  position: fixed; /* 改为固定定位 */
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 250rpx; /* 固定高度 */
+  z-index: 100; /* 提高层级 */
+  padding-top: 160rpx; /* 状态栏高度加额外padding */
+  box-sizing: border-box;
+  display: flex; /* 添加弹性布局 */
+  align-items: center; /* 垂直居中 */
+  justify-content: center; /* 水平居中 */
+}
+
+/* 模型选择器按钮样式 */
+.model-selector {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20rpx 30rpx; /* 调整内边距 */
+  background-image: linear-gradient(to right, #fdcbf1 0%, #fdcbf1 1%, #e6dee9 100%);
+  border-radius: 30rpx; /* 增加圆角 */
+  width: 70%; /* 减小宽度 */
+  box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.1); /* 添加阴影 */
+}
+
+/* 模型选择器文本样式 */
+.model-selector text {
+  font-size: 28rpx;
+  color: #333;
+  font-weight: 500;
+}
+
+/* 模型选择器图标样式 */
+.selector-icon {
+  width: 28rpx;
+  height: 28rpx;
+  margin-left: 10rpx;
+}
+
+/* 聊天区域优化 - 动态高度 */
+.chat-box {
+  flex: 1;
+  padding: 20rpx;
+  margin-top: 50rpx; /* 改为固定值，与top-bar高度一致 */
+  /* 调整计算方式，减去底部栏的高度 10vh */
+  height: calc(100vh - 250rpx - 5vh); 
+  box-sizing: border-box;
+  overflow-y: auto; /* 当内容超出高度时，显示垂直滚动条 */
+  padding-bottom: 0; /* 确保底部无内边距 */
+  margin-bottom: 0; /* 确保底部无外边距 */
+}
+
+/* 隐藏滚动条 */
+.chat-box::-webkit-scrollbar {
+  display: none;
+}
+
+/* 聊天消息基础样式 */
+.chat-message {
+  margin: 10rpx 0;
+  max-width: 80%;
+}
+
+/* 用户消息位置 - 靠右，距离右边20像素 */
+.user-message {
+  display: flex; /* 使用弹性布局 */
+  justify-content: flex-end; /* 内容靠右对齐 */
+  padding: 10px; /* 可选：增加内边距以提升视觉效果 */
+  max-width: 100%; /* 限制最大宽度，避免过长的消息占据整个屏幕 */
+  word-break: break-word; /* 自动换行，防止文字溢出 */
+  margin-left: 50rpx; /* 距离左边20像素 */
+
+}
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%; /* 圆形头像 */
+}
+
+/* 助手消息位置 - 靠左，距离左边20像素 */
+.assistant-message {
+  margin-left: 20rpx; /* 距离左边20像素 */
+  max-width: 100%; /* 限制最大宽度，避免过长的消息占据整个屏幕 */
+  margin-right: 50rpx; /* 距离右边20像素 */
+}
+
+/* 用户文本气泡样式 */
+.user-text {
+  background: rgba(222, 138, 177, 0.4);
+  color: rgb(0, 0, 0);
+  padding: 10px 10px; /* 上下内边距为 5px，左右为 10px */
+  border-radius: 15rpx; /* 增加圆角 */
+  display: inline-block; /* 内联块级元素 */
+  max-width: 100%; /* 限制最大宽度 */
+  word-wrap: break-word; /* 自动换行 */
+  line-height: 1.2; /* 减小行高 */
+  font-size: 15px; /* 设置字体大小 */
+  vertical-align: top; /* 确保内容紧贴顶部 */
+  box-sizing: border-box; /* 确保 padding 和 border 包含在总高度内 */
+}
+ 
+/* 助手文本气泡样式 */
+.assistant-text {
+  background: rgba(205, 125, 214, 0.4);
+  color: #000000;
+  padding: 10px 10px; /* 上下内边距为 5px，左右为 10px */
+  border-radius: 15rpx;
+  display: inline-block;
+  max-width: 100%;
+  word-wrap: break-word;
+  line-height: 1.2; /* 减小行高 */
+  font-size: 15px; /* 设置字体大小 */
+  vertical-align: top; /* 确保内容紧贴顶部 */
+  box-sizing: border-box; /* 确保 padding 和 border 包含在总高度内 */
+}
+
+/* 媒体消息样式 */
+.chat-image, .chat-video {
+  max-width: 400rpx;
+  border-radius: 20rpx;
+  margin: 10rpx 0;
+}
+.chat-video {
+  max-height: 400rpx;
+}
+
+/* 音频消息样式 */
+.chat-audio {
+  display: flex;
+  align-items: center;
+  background: rgba(240, 147, 251, 0.7);
+  padding: 20rpx;
+  border-radius: 15rpx;
+  max-width: 400rpx;
+}
+
+.chat-audio .audio-icon {
+  width: 40rpx;
+  height: 40rpx;
+  margin-right: 20rpx;
+}
+
+.chat-audio .duration {
+  color: #000;
+  font-size: 28rpx;
+}
+
+/* 底部操作区优化 */
+.bottom-area {
+  position: fixed; /* 固定定位 */
+  bottom: 0; /* 距离底部为0 */
+  left: 0;
+  right: 0;
+  height: 10vh; /* 高度设置为10%视口高度 */
+  padding: 10rpx; /* 内边距 */
+  background-image: linear-gradient(to right, #fdcbf1 0%, #fdcbf1 1%, #e6dee9 100%); /* 渐变背景 */
+  display: flex; /* 弹性布局 */
+  align-items: center; /* 垂直居中 */
+  justify-content: space-between; /* 左右间距 */
+  box-sizing: border-box; /* 盒模型 */
+  z-index: 10; /* 防止被覆盖 */
+  padding-top: 0; /* 避免顶部内边距影响布局 */
+}
+
+/* 录音按钮样式 - 占10%宽度 */
+.voice-btn {
+  flex: 0 0 10%; /* 宽度占10% */
+  height: calc(10vh - 10rpx); /* 自适应高度，减去上下内边距 */
+  margin: 0 5rpx; /* 缩短左右间距 */
+}
+
+/* 输入框容器样式 - 占70%宽度 */
+.input-area {
+  flex: 0 0 60%; /* 宽度占70% */
+  height: calc(10vh - 65rpx); /* 自适应高度，减去上下内边距 */
+  margin: 0 5rpx; /* 缩短左右间距 */
+}
+
+/* 输入框样式 */
+.input-area input {
+  width: 100%; /* 宽度占100% */
+  height: 100%; /* 高度占100% */
+  background: #fff; /* 白色背景 */
+  border: 2rpx solid rgba(45, 41, 52, 0.4); /* 灰色边框 */
+  border-radius: 40rpx; /* 圆角 */
+  padding: 0 30rpx; /* 调整内边距 */
+  font-size: 28rpx; /* 字体大小 */
+  color: #333; /* 字体颜色 */
+  box-sizing: border-box; /* 确保内边距不影响布局 */
+}
+
+/* 附件按钮样式 - 占10%宽度 */
+.upload-btn {
+  flex: 0 0 8%; /* 宽度占10% */
+  height: calc(10vh - 10rpx); /* 自适应高度，减去上下内边距 */
+  margin: 0 5rpx; /* 缩短左右间距 */
+}
+
+/* 发送按钮样式 - 占10%宽度 */
+.send-btn {
+  flex: 0 0 10%; /* 宽度占10% */
+  height: calc(10vh - 10rpx); /* 自适应高度，减去上下内边距 */
+  margin: 0 5rpx; /* 缩短左右间距 */
+}
+
+/* 所有操作按钮的通用样式 */
+.action-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 按钮图标样式 */
+.action-btn image {
+  width: 68rpx;
+  height: 68rpx;
+}
+
+/* 录音按钮动画效果 */
+.voice-btn image.recording {
+  transform: scale(1.2);
+  opacity: 0.7;
+  transition: all 0.3s;
+}
+
+/* 录音按钮样式 */
+.record-btn {
+  width: 100%;
+  height: 100%;
+  background: #fff;
+  border: 1rpx solid #ddd;
+  border-radius: 40rpx;
+  font-size: 28rpx;
+  color: #333;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.record-btn.recording {
+  background: #eee;
+  color: #666;
+}

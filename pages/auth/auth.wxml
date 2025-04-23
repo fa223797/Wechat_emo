@@ -1,0 +1,32 @@
+<view class="container">
+  <view class="auth-modal">
+    <view class="auth-header">
+      <image class="logo" src="../../pages/ai/image/bg.png" mode="aspectFit"></image>
+      <view class="auth-title">欢迎来到奇妙旅程</view>
+      <view class="auth-desc">首次登录请输入手机号</view>
+    </view>
+    
+    <view class="input-group">
+      <view class="phone-input-wrap">
+        <text class="prefix">+86</text>
+        <input 
+          type="number" 
+          class="phone-input" 
+          placeholder="请输入手机号" 
+          maxlength="11"
+          value="{{phoneNumber}}"
+          bindinput="onPhoneInput"
+        />
+      </view>
+      <view class="error-tip" wx:if="{{errorMsg}}">{{errorMsg}}</view>
+    </view>
+
+    <button 
+      class="auth-btn {{isValid ? '' : 'disabled'}}" 
+      bindtap="submitPhoneNumber"
+      loading="{{isLoading}}"
+      disabled="{{!isValid || isLoading}}">
+      {{ isLoading ? '提交中...' : '确认' }}
+    </button>
+  </view>
+</view>

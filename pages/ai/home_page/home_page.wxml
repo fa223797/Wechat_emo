@@ -1,0 +1,41 @@
+<!--pages/ai/home_page/home_page.wxml-->
+<view class="container">
+  <view class="logo-section">
+    <image class="logo" src="../image/roseyy.png" mode="aspectFit"></image>
+    <view class="welcome-text">
+      <text class="title">嗨！我是奇妙医生</text>
+      <text class="subtitle">我能陪你一起治愈孤独，我想当你的心灵伴侣
+      让我走进你的世界好吗......</text>
+
+    </view>
+  </view>
+
+  <view class="function-blocks">
+    <!-- 功能块1：AI聊天 -->
+    <view class="function-item" bindtap="navigateToChat">
+      <view class="function-icon-container">
+        <image class="function-icon" src="../image/ai.png" mode="aspectFit"></image>
+      </view>
+      <text class="function-title">心理咨询</text>
+      <text class="function-desc">我可以解答你的疑惑陪你聊天</text>
+    </view>
+
+    <!-- 功能块2：心理测评 -->
+    <view class="function-item" bindtap="navigateToTest">
+      <view class="function-icon-container">
+        <image class="function-icon" src="../image/test.png" mode="aspectFit"></image>
+      </view>
+      <text class="function-title">心理测评</text>
+      <text class="function-desc">我可以帮你评测心里卫生健康</text>
+    </view>
+
+    <!-- 功能块3：资料库 -->
+    <view class="function-item" bindtap="navigateToEmoBook">
+      <view class="function-icon-container">
+        <image class="function-icon" src="../image/book.png" mode="aspectFit"></image>
+      </view>
+      <text class="function-title">资料库</text>
+      <text class="function-desc">专业心理学数据资料库查询</text>
+    </view>
+  </view>
+</view>

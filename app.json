@@ -1,0 +1,44 @@
+{
+  "pages": [
+    "pages/auth/auth",
+    "pages/ai/home_page/home_page",
+    "pages/ai/chat_emo/chat_emo",
+    "pages/ai/emo_test/emo_test",
+    "pages/ai/emo_book/emo_book"
+  ],
+  "window": {
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "奇妙医生",
+    "navigationBarBackgroundColor": "#ffffff",
+    "navigationStyle": "custom"
+  },
+  "style": "v2",
+  "componentFramework": "glass-easel",
+  "sitemapLocation": "sitemap.json",
+  "lazyCodeLoading": "requiredComponents",
+  "requiredBackgroundModes": [
+    "audio"
+  ],
+  "permission": {
+    "scope.userLocation": {
+      "desc": "需要使用您的地理位置"
+    },
+    "scope.writePhotosAlbum": {
+      "desc": "需要访问相册以保存和选择图片"
+    },
+    "scope.record": {
+      "desc": "用于语音消息录制"
+    }
+  },
+  "libVersion": "2.10.0",
+  "usingComponents": {},
+  "globalStyle": {
+    "backgroundColor": "#ffffff",
+    "pageOrientation": "portrait"
+  },
+  "subpackages": [],
+  "miniprogram": {
+    "version": "2.10.0"
+  },
+  "requiredPrivateLibs": []
+}

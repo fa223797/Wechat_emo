@@ -1,0 +1,125 @@
+<!-- pages/ai/chat_emo/chat_emo.wxml -->
+<!-- 主容器，动态绑定背景样式 -->
+<view class="container" style="{{bgStyle}}">
+  
+  <!-- 添加初始欢迎界面 -->
+  <view class="welcome-section" wx:if="{{chatHistory.length === 0}}">
+    <image class="welcome-icon" src="../image/bg.png" mode="aspectFit"></image>
+    <text class="welcome-text">如果您很伤心可以给我语音留言，也可以打字告诉我，我可以帮您分析诊断报告也可以帮您理解好友发的论文资料</text>
+  </view>
+
+  <!-- 顶部模型选择区域 -->
+  <view class="top-bar">
+    <!-- 点击触发模型选择器弹出 -->
+    <view class="model-selector" bindtap="showModelSelector">
+      <!-- 显示当前选中模型名称 -->
+      <text>{{currentModelName}}</text>
+      <!-- 下拉箭头图标，使用aspectFit模式适配 -->
+      <image class="selector-icon" 
+             src="{{resources.downArrowIcon}}" 
+             mode="aspectFit">
+      </image>
+    </view>
+  </view>
+
+  <!-- 聊天记录展示区域 -->
+  <scroll-view class="chat-box" 
+               scroll-y 
+               scroll-into-view="{{scrollToId}}" 
+               scroll-with-animation>
+    <!-- 循环渲染聊天记录，使用wx:key优化性能 -->
+    <block wx:for="{{chatHistory}}" wx:key="index">
+      <!-- 消息容器，根据发送者切换样式 -->
+      <view class="chat-message {{item.sender === 'user' ? 'user-message' : 'assistant-message'}}" 
+            id="msg{{index}}">
+        <!-- 添加助手头像 -->
+        <image wx:if="{{item.sender === 'assistant'}}" 
+               class="avatar" 
+               src="../image/bg.png" 
+               mode="aspectFit">
+        </image>
+        <view class="message-content">
+          <!-- 图片消息展示 -->
+          <block wx:if="{{item.type === 'image'}}">
+            <image 
+              src="{{item.content}}" 
+              mode="widthFix" 
+              class="chat-image"
+              data-url="{{item.content}}"
+              bindtap="previewImage"
+            >
+            </image>
+          </block>
+          <!-- 视频消息展示 -->
+          <block wx:elif="{{item.type === 'video'}}">
+            <video class="chat-video" 
+                   src="{{item.content}}">
+            </video>
+          </block>
+          <!-- 音频消息交互组件 -->
+          <block wx:elif="{{item.type === 'audio'}}">
+            <view class="chat-audio" 
+                  bindtap="playAudio" 
+                  data-src="{{item.content}}">
+              <image class="audio-icon" 
+                     src="{{resources.audioIcon}}" 
+                     mode="aspectFit">
+              </image>
+              <text>语音留言</text>
+            </view>
+          </block>
+          <!-- 默认文本消息展示 -->
+          <block wx:else>
+            <text class="{{item.sender === 'user' ? 'user-text' : 'assistant-text'}}">
+              {{item.content}}
+            </text>
+          </block>
+        </view>
+      </view>
+    </block>
+  </scroll-view>
+
+  <!-- 底部操作栏 -->
+  <view class="bottom-area">
+    <!-- 语音/键盘切换按钮 -->
+    <view class="voice-btn action-btn" bindtap="toggleRecordMode">
+      <image src="{{resources.voiceIcon}}" mode="aspectFit"/>
+    </view>
+    
+    <!-- 文本输入框/语音录制按钮 -->
+    <view class="input-area">
+      <input wx:if="{{!showRecordButton}}"
+             class="chat-input" 
+             type="text" 
+             placeholder="{{currentMediaFile ? '请描述您的问题' : '请输入您的问题'}}"
+             value="{{inputContent}}" 
+             bindinput="onInputChange" 
+             bindfocus="onInputFocus" 
+             bindblur="onInputBlur"/>
+      <button wx:else
+              class="record-btn"
+              hover-class="recording"
+              bindtouchstart="startRecording"
+              bindtouchend="stopRecording"
+              bindtouchcancel="stopRecording">
+        {{isRecording ? recordingDuration + 's' : '按住说话'}}
+      </button>
+    </view>
+    
+    <!-- 文件上传按钮 -->
+    <view class="upload-btn action-btn" 
+          bindtap="chooseMedia">
+      <image src="{{resources.uploadIcon}}" 
+             mode="aspectFit">
+      </image>
+    </view>
+    
+    <!-- 消息发送按钮 -->
+    <view class="send-btn action-btn" 
+          bindtap="handleSendMessage">
+      <image src="{{resources.sendIcon}}" 
+             mode="aspectFit">
+      </image>
+    </view>
+  </view>
+</view>

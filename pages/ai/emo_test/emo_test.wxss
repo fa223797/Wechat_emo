@@ -1,0 +1,722 @@
+/* pages/ai/emo_test/emo_test.wxss */
+
+/* 首页容器样式 */
+/* 定义页面容器样式 */
+.container {
+  position: relative;
+  min-height: 100vh;
+  background: linear-gradient(to bottom, #d5dfe8 0%, rgb(241 , 241, 241) 100%);
+  padding: 0;
+}
+/* 定义页面遮罩样式 */
+.container-mask {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 200rpx;
+  background: linear-gradient(to bottom, #0acffe 0%, #495aff 100%);
+  z-index: 0;
+  border-bottom-left-radius: 50rpx;
+  border-bottom-right-radius: 50rpx;
+}
+/* 定义内容区域样式 */
+.content-wrapper {
+  position: relative;
+  z-index: 1;
+  padding: 7% 5%;
+}
+
+
+/* 加载状态样式 */
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 85vh;
+}
+.loading-content {
+  padding: 60rpx;
+  background-color: rgb(255, 255, 255);
+  border-radius: 24rpx;
+  box-shadow: 0 6rpx 24rpx rgba(0,0,0,0.08);
+  width: 70%;
+  text-align: center;
+}
+/* 加载动画的样式，包括尺寸、边框、圆角和旋转动画 */
+.spinner {
+  width: 80rpx;
+  height: 80rpx;
+  margin: 0 auto 40rpx;
+  border: 6px solid rgba(98, 98, 171, 0.3);
+  border-top-color: #0080ff;
+  border-radius: 50%;
+  animation: spin 1s infinite linear;
+}
+/* 旋转动画的关键帧定义 */
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+.loading-text {
+  display: block;
+  font-size: 30rpx;
+  color: #2f2f2f;
+  margin-top: 30rpx;
+  line-height: 1.5;
+}
+
+
+/* 类型选择样式 */
+.type-select-container {
+  padding: 20rpx 0 50rpx;
+}
+/* 类型选择头部的样式 */
+.type-header {
+  text-align: center;
+  color: #ffffff;
+  padding-top: 5%;
+  height: 6vh;
+  position: relative;
+  margin-bottom: 30rpx;
+  width: 90vw;
+  margin-left: auto;
+  margin-right: auto;
+}
+/* 类型选择头部文字的基础样式 */
+.type-header text {
+  display: block;
+  font-size: 30rpx;
+  text-shadow: 0 1rpx 2rpx rgba(0,0,0,0.1);
+  position: absolute;
+  width: 100%;
+  left: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding: 0 20rpx;
+  box-sizing: border-box;
+  max-width: 90vw;
+}
+/* 修改第一行文字位置 */
+.type-header text:first-child {
+  top: 2vh;
+}
+/* 类型选择副标题的样式，包括字体大小、加粗和外边距 */
+.type-subtitle {
+  font-size: 40rpx !important;
+  font-weight: bold;
+  top: 4.5vh !important;
+  max-width: inherit;
+}
+/* 类型列表的样式，包括外边距 */
+.type-list {
+  margin-top: 30rpx;
+  padding-top: 20rpx;
+}
+/* 类型行的样式，包括显示方式、对齐方式和外边距 */
+.type-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 5%;
+  gap: 3%;
+}
+/* 类型项的样式，包括相对定位、尺寸、背景颜色、圆角、对齐方式、字体大小、颜色、阴影、过渡效果、内边距、加粗和文本对齐 */
+.type-item {
+  position: relative;
+  width: 30%;
+  height: 160rpx;
+  margin: 0 10rpx;
+  padding: 10rpx;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(-180deg, #E3FDF5 0%, #FFE6FA 100%);
+  border-radius: 16rpx;
+  font-size: 28rpx;
+  color: #444;
+  box-shadow: 0 2rpx 10rpx rgba(0,0,0,0.05);
+  transition: all 0.3s;
+  font-weight: bold;
+  text-align: center;
+}
+/* 类型项激活时的样式，包括缩放和背景颜色 */
+.type-item:active {
+  transform: scale(0.98);
+  background-color: #f5f7fa;
+  border: 1rpx solid #e0e3e9;
+}
+/* 即将上架的类型项样式，包括透明度和颜色 */
+.coming-soon {
+  opacity: 0.8;
+  color: #838080;
+}
+/* 即将上架标签的样式，包括绝对定位、尺寸、字体大小、背景颜色、颜色、内边距、圆角和字体重量 */
+.coming-soon-tag {
+  position: absolute;
+  top: 20rpx;
+  right: 20rpx;
+  font-size: 20rpx;
+  background-color: #ff8000;
+  color: white;
+  padding: 6rpx 12rpx;
+  border-radius: 20rpx;
+  font-weight: normal;
+}
+
+
+
+
+/* 问题样式 */
+/* 问题容器的样式，包括背景颜色、圆角、内边距、阴影和外边距 */
+.question-container {
+  background: rgb(251, 253, 255);
+  border-radius: 24rpx;
+  padding: 40rpx 40rpx;
+  box-shadow: 0 4rpx 20rpx rgba(0,0,0,0.06);
+  margin-bottom: 8vh;
+  margin-top: 3vh;
+  width: 43vh;
+  box-sizing: border-box;
+}
+/* 指导信息的样式，包括外边距、下边框和内边距 */
+.guidance {
+  margin-bottom: 40rpx;
+  border-bottom: 1rpx solid #eee;
+  padding-bottom: 30rpx;
+}
+/* 测试标题的样式，包括字体大小、加粗、颜色、外边距和文本对齐 */
+.test-title {
+  font-size: 36rpx;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 20rpx;
+  text-align: center;
+}
+/* 测试说明和评分规则的样式，包括字体大小、颜色、外边距和行高 */
+.test-instructions, .test-scoring {
+  font-size: 25rpx;
+  color: #666;
+  margin-bottom: 16rpx;
+  line-height: 1.6;
+}
+/* 问题的样式，包括内边距 */
+.question {
+  padding: 20rpx 0;
+}
+/* 问题头部的样式，包括显示方式、对齐方式和外边距 */
+.question-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30rpx;
+}
+/* 问题编号的样式，包括字体大小和颜色 */
+.question-number {
+  font-size: 28rpx;
+  color: #888;
+}
+/* 进度点的样式，包括显示方式和间隔 */
+.progress-dots {
+  display: flex;
+  gap: 8rpx;
+}
+/* 进度点的样式，包括尺寸、圆角和背景颜色 */
+.progress-dot {
+  width: 12rpx;
+  height: 12rpx;
+  border-radius: 50%;
+  background-color: #e0e0e0;
+}
+/* 活跃进度点的样式，包括背景颜色、尺寸和圆角 */
+.progress-dot.active {
+  background-color: #7F7FD5;
+  width: 24rpx;
+  border-radius: 6rpx;
+}
+/* 完成进度点的样式，包括背景颜色 */
+.progress-dot.completed {
+  background-color: #91EAE4;
+}
+/* 问题文本的样式，包括显示方式、字体大小、加粗、颜色、外边距和行高 */
+.question-text {
+  display: block;
+  font-size: 34rpx;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 50rpx;
+  line-height: 1.5;
+}
+/* 选项的样式，包括外边距 */
+.options {
+  margin-bottom: 50rpx;
+}
+/* 选项的样式，包括显示方式、对齐方式、内边距、背景颜色、圆角、外边距和过渡效果 */
+.option {
+  display: flex;
+  align-items: center;
+  padding: 24rpx 30rpx;
+  background-color: #eef6fb;
+  border-radius: 16rpx;
+  margin-bottom: 24rpx;
+  transition: all 0.3s;
+}
+/* 选项激活时的样式，包括背景颜色 */
+.option:active {
+  background-color: #044aa0;
+}
+/* 选项选中时的样式 */
+.option.selected {
+  background-color: rgb(151, 217, 250); /* 白色背景 */
+  color: #333; /* 保持原来的文字颜色 */
+  border: 3rpx solid #032d6c; /* 红色边框 */
+  box-shadow: 0 0 8rpx rgba(1, 9, 92, 0.3); /* 红色阴影 */
+}
+
+.option-circle {
+  width: 50rpx;
+  height: 50rpx;
+  border-radius: 25rpx;
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 28rpx;
+  margin-right: 20rpx;
+  color: #666;
+  border: 2rpx solid #ddd;
+  font-weight: bold;
+}
+/* 选项圆圈的样式，包括尺寸、圆角、背景颜色、显示方式、对齐方式、字体大小、颜色、边框和字体重量 */
+
+.option-circle.selected {
+  background-color: rgb(212, 212, 212); /* 白色背景保持不变 */
+  color: #333; /* 保持原来的文字颜色 */
+  border-color: #032d6c; /* 红色边框 */
+}
+/* 选项圆圈选中时的样式 */
+
+.option-text {
+  font-size: 30rpx;
+  color: #343333;
+  flex: 1;
+}
+/* 选项文本的样式，包括字体大小、颜色和弹性布局 */
+
+.navigation-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 50rpx;
+  width: 100%;
+}
+/* 导航按钮的样式，包括显示方式、对齐方式和外边距 */
+
+.nav-button {
+  flex: 0 0 45%;
+  height: 88rpx;
+  line-height: 88rpx;
+  border-radius: 44rpx;
+  font-size: 30rpx;
+  text-align: center;
+  font-weight: 500;
+  max-width: 300rpx;
+}
+/* 导航按钮的样式，包括宽度、高度、行高、圆角、字体大小、文本对齐和字体重量 */
+
+.block-title {
+  font-size: 15px;
+  color: #eb0505;
+  margin-left: 200rpx !important;
+  margin-top: 20rpx !important;
+  font-weight: bold; 
+}
+.prev-button {
+  background-color: #eff1f4;
+  color: #424242;
+  margin-right: 0;
+  height: 65px;
+  width: 1vph
+;
+}
+/* 上一题按钮的样式，包括背景颜色和颜色 */
+
+.next-button {
+  background: linear-gradient(90deg, #7F7FD5 0%, #86A8E7 100%);
+  color: rgb(255, 255, 255);
+  height: 65px;
+}
+/* 下一题按钮的样式，包括背景渐变和颜色 */
+
+.next-button.disabled {
+  background: #cccccc;
+  color: #999;
+  height: 65px;
+}
+/* 下一题按钮禁用时的样式，包括背景颜色和颜色 */
+
+
+
+
+/* 结果样式 */
+.result-container {
+  background: white;
+  border-radius: 50rpx;
+  padding: 40rpx 40rpx;
+  box-shadow: 0 4rpx 20rpx rgba(0,0,0,0.06);
+  padding-bottom: 6vh;
+  max-height: 68vh;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+/* 结果容器的样式，包括背景颜色、圆角、内边距、阴影和滚动行为 */
+.result-header {
+  text-align: center;
+  margin-bottom: 40rpx;
+  font-size: 36rpx;
+  font-weight: 600;
+  color: #333;
+  top: 0;
+  background: white;
+  z-index: 1;
+}
+
+/* 结果内容的样式，包括内边距 */
+.result-summary {
+  background: #e5e7eb;
+  padding: 20rpx;
+  border-radius: 16rpx;
+  margin-bottom: 30rpx;
+}
+/* 结果摘要的样式，包括背景颜色、内边距、圆角和外边距 */
+
+.result-score, .result-level {
+  display: block;
+  font-size: 30rpx;
+  color: #333;
+
+}
+/* 结果分数和等级的样式，包括显示方式、字体大小、颜色和行高 */
+
+.result-level {
+  font-weight: 600;
+  margin-top: 16rpx;
+}
+/* 结果等级的样式，包括加粗和外边距 */
+
+.result-explanation, .result-report, .result-cautions {
+  margin-bottom: 30rpx;
+  padding-bottom: 30rpx;
+  border-bottom: 1rpx solid #2e2a5c;
+}
+/* 结果解释、报告和注意事项的样式，包括外边距、内边距和下边框 */
+
+.explanation-title, .cautions-title {
+  display: block;
+  font-size: 28rpx;
+  font-weight: 600;
+  margin-bottom: 10rpx;
+}
+/* 解释标题和注意事项标题的样式，包括显示方式、字体大小、加粗、颜色和外边距 */
+
+.report-title-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15rpx;
+  padding-bottom: 10rpx;
+  border-bottom: 1rpx solid #eee;
+}
+/* 报告标题容器的样式，包括显示方式、对齐方式和外边距 */
+
+.report-title {
+  font-size: 28rpx;
+  font-weight: 600;
+  color: #333;
+}
+/* 报告标题的样式，包括字体大小、加粗和颜色 */
+
+.report-tag {
+  background: linear-gradient(90deg, #7F7FD5 0%, #86A8E7 100%);
+  color: white;
+  font-size: 22rpx;
+  padding: 6rpx 16rpx;
+  border-radius: 20rpx;
+}
+/* 报告标签的样式，包括背景渐变、颜色、字体大小、内边距和圆角 */
+
+.explanation-content, .suggestion-content, .report-content {
+  display: block;
+  font-size: 28rpx;
+  color: #56575c;
+  line-height: 1.1;
+  margin-bottom: 15rpx;
+  text-align: justify;
+  letter-spacing: 1rpx;
+  word-spacing: 2rpx;
+}
+/* 解释内容、建议内容和报告内容的样式，包括显示方式、字体大小、颜色、行高、外边距和文本对齐 */
+
+.report-content text {
+  display: block;
+  margin-bottom: 10rpx;
+}
+/* 针对特定段落的样式 */
+
+.caution-item {
+  font-size: 25rpx;
+  color: #666;
+  margin-bottom: 16rpx;
+  line-height: 1.2;
+}
+/* 注意事项项的样式，包括字体大小、颜色、外边距和行高 */
+
+.result-footer {
+  text-align: center;
+  margin-top: 50rpx;
+  font-size: 30rpx;
+  color: #666;
+
+}
+/* 结果页脚的样式，包括文本对齐、外边距、字体大小和颜色 */
+
+.test-time {
+  display: block;
+  margin-top: 20rpx;
+  font-size: 24rpx;
+  color: #999;
+}
+/* 测试时间的样式，包括显示方式、外边距、字体大小和颜色 */
+
+.action-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 50rpx;
+}
+/* 动作按钮的样式，包括显示方式、对齐方式和外边距 */
+
+.restart-btn, .share-btn {
+  width: 30%;
+  height: 88rpx;
+  line-height: 60rpx;
+  border-radius: 44rpx;
+  font-size: 30rpx;
+  font-weight: 800;
+}
+/* 重新开始按钮和分享按钮的样式，包括宽度、高度、行高、圆角、字体大小和字体重量 */
+
+.restart-btn {
+  background-color: #f5f7fa;
+  color: #666;
+}
+/* 重新开始按钮的样式，包括背景颜色和颜色 */
+
+.share-btn {
+  background: linear-gradient(90deg, #7F7FD5 0%, #86A8E7 100%);
+  color: white;
+}
+/* 分享按钮的样式，包括背景渐变和颜色 */
+
+/* 可以添加一些针对大五人格测试的特定样式 */
+.dimension-scores {
+  margin: 20rpx 0;
+  padding: 10rpx;
+  background-color: #f8f8f8;
+  border-radius: 10rpx;
+}
+
+.dimension-title {
+  font-weight: bold;
+  display: block;
+  margin-bottom: 10rpx;
+}
+
+.dimension-data {
+  color: #333;
+}
+
+.dimension-details {
+  margin: 20rpx 0;
+}
+
+.dimension-item {
+  margin-bottom: 20rpx;
+  padding-bottom: 10rpx;
+  border-bottom: 1px solid #eee;
+}
+
+.dimension-name {
+  font-weight: bold;
+  display: block;
+  margin-bottom: 10rpx;
+  color: #1a73e8;
+}
+
+.dimension-desc {
+  font-size: 28rpx;
+  color: #555;
+}
+
+/* 性别选择界面样式 */
+.gender-select-container {
+  background: white;
+  border-radius: 24rpx;
+  padding: 40rpx;
+  box-shadow: 0 4rpx 20rpx rgba(0,0,0,0.06);
+  margin-top: 0;
+  text-align: center;
+  position: absolute;
+  top: 300%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80%;
+}
+
+.gender-header {
+  margin-bottom: 50rpx;
+}
+
+.gender-title {
+  display: block;
+  font-size: 36rpx;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 20rpx;
+}
+
+.gender-subtitle {
+  display: block;
+  font-size: 30rpx;
+  color: #666;
+}
+
+.gender-options {
+  display: flex;
+  justify-content: center;
+  gap: 60rpx;
+  margin-bottom: 60rpx;
+}
+
+.gender-option {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 200rpx;
+  height: 230rpx;
+  border-radius: 20rpx;
+  background-color: #f0f0f0;
+  margin: 0 30rpx;
+  transition: all 0.3s ease;
+}
+
+.gender-option.selected {
+  background-color: #4285f4;
+  box-shadow: 0 0 20rpx rgba(66, 133, 244, 0.5);
+}
+
+.gender-text {
+  font-size: 48rpx;
+  font-weight: bold;
+  color: #333;
+}
+
+.gender-option.selected .gender-text {
+  color: #fff;
+}
+
+.gender-confirm-btn {
+  background: linear-gradient(90deg, #7F7FD5 0%, #86A8E7 100%);
+  color: white;
+  height: 88rpx;
+  border-radius: 44rpx;
+  font-size: 30rpx;
+  font-weight: 500;
+  width: 80%;
+  margin: 0 auto;
+  text-align: center;
+  line-height: 40px;
+  height: 40px;
+  display: block;
+  padding: 0 20px;
+}
+
+.gender-confirm-btn.disabled  {
+  background: #cccccc;
+  color: #999;
+  text-align: center;
+  line-height: 40px;
+  height: 40px;
+  display: block;
+  padding: 0 20px;
+}
+
+/* 子维度样式 */
+.sub-dimensions {
+  margin-left: 40rpx;
+  margin-top: 20rpx;
+}
+
+.sub-dimension-item {
+  margin-bottom: 15rpx;
+  padding-bottom: 10rpx;
+  border-bottom: 1px dashed #f0f0f0;
+}
+
+.sub-dimension-name {
+  font-weight: 500;
+  display: block;
+  margin-bottom: 5rpx;
+  color: #4285f4;
+  font-size: 26rpx;
+}
+
+.sub-dimension-desc {
+  font-size: 24rpx;
+  color: #666;
+  display: block;
+  line-height: 1.4;
+}
+
+
+/* 添加性别图片样式 */
+.gender-image {
+  width: 120rpx;
+  height: 120rpx;
+  margin-bottom: 20rpx;
+}
+
+/* 调整专利图片容器和图片样式以保持正确的宽高比 */
+.patent-image-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20rpx;
+  width: 100%;
+}
+
+.patent-image {
+  width: 600rpx;
+  height: 900rpx;
+  object-fit: contain;
+}
+
+/* 修改为水平排列 */
+.type-column {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  padding: 0 10rpx;
+  width: 100%;
+  box-sizing: border-box;
+  margin-top: 20rpx;
+}
+
+.ai-report {
+  font-size: 16px;
+  color: #333;
+  margin-top: 10px;
+  white-space: pre-wrap; /* 保留换行符 */
+  word-break: break-word; /* 长单词或URL地址换行 */
+}

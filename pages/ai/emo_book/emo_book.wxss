@@ -1,0 +1,222 @@
+/* pages/ai/emo_book/emo_book.wxss */
+
+/* 容器样式 - 整体页面布局 */
+.container {
+  height: 104.5vh; /* 使用视窗高度作为容器高度 */
+  display: flex; /* 弹性布局 */
+  flex-direction: column; /* 垂直布局 */
+  background-image: linear-gradient(to top, #537895 0%,#ebf4fd 40%, #09203f 100%);
+  background-size: cover; /* 背景图片大小 */
+  background-position: center; /* 背景图片位置 */
+}
+
+/* 添加欢迎界面样式 */
+.welcome-section {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40rpx;
+  z-index: 10;
+  width: 85%;
+  border-radius: 20rpx;
+}
+
+.welcome-icon {
+  width: 150rpx;
+  height: 150rpx;
+  margin-bottom: 50rpx;
+}
+
+.welcome-text {
+  text-align: center;
+  font-size: 30rpx;
+  color: #383e43;
+  line-height: 1.8;
+  padding: 0 40rpx;
+  font-weight: bold; 
+}
+
+/* 聊天区域优化 - 动态高度 */
+.chat-box {
+  height: 90vh;
+  box-sizing: border-box;
+  overflow-y: auto;
+  padding-bottom: 40rpx;
+  margin-bottom: 1rpx;
+}
+
+/* 隐藏滚动条 */
+.chat-box::-webkit-scrollbar {
+  display: none;
+}
+
+/* 聊天消息基础样式 */
+.chat-message {
+  margin: 10rpx 0; /* 修改：减少上下间距 */
+  max-width: 85%;
+  display: flex;
+  align-items: flex-start;
+}
+
+/* 用户消息位置 - 靠右 */
+.user-message {
+  display: flex; /* 使用弹性布局 */
+  justify-content: flex-end; /* 内容靠右对齐 */
+  padding: 10px; /* 可选：增加内边距以提升视觉效果 */
+  max-width: 100%; /* 限制最大宽度，避免过长的消息占据整个屏幕 */
+  word-break: break-word; /* 自动换行，防止文字溢出 */
+  margin-left: 50rpx; /* 距离左边20像素 */
+}
+
+/* 助手消息位置 - 靠左 */
+.assistant-message {
+  margin-left: 20rpx; /* 距离左边20像素 */
+  max-width: 100%; /* 限制最大宽度，避免过长的消息占据整个屏幕 */
+  margin-right: 50rpx; /* 距离右边20像素 */
+}
+
+/* 头像样式 */
+.avatar {
+  width: 60rpx;
+  height: 60rpx;
+  border-radius: 60%;
+  margin: 0 20rpx;
+  box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.1);
+}
+
+/* 消息内容容器 */
+.message-content {
+  display: flex;
+  flex-direction: column;
+  max-width: calc(100% - 120rpx);
+}
+
+/* 用户文本气泡样式 */
+.user-text {
+  background: rgba(4, 146, 255, 0.8);
+  color: #ffffff;
+  padding: 10rpx;
+  border-radius: 10rpx 10rpx 10rpx;
+  display: inline-block;
+  max-width: 100%;
+  word-wrap: break-word;
+  line-height: 1.4;
+  font-size: 30rpx;
+  box-sizing: border-box;
+  box-shadow: 0 2rpx 6rpx rgba(0, 0, 0, 0.1);
+}
+
+/* 助手文本气泡样式 */
+.assistant-text {
+  background: rgba(86, 22, 151, 0.8);
+  color: #ffffff;
+  padding: 20rpx;
+  border-radius: 20rpx 20rpx 20rpx 0;
+  display: inline-block;
+  max-width: 100%;
+  word-wrap: break-word;
+  line-height: 1.4;
+  font-size: 30rpx;
+  box-sizing: border-box;
+  box-shadow: 0 2rpx 6rpx rgba(0, 0, 0, 0.1);
+}
+
+/* 思考过程文本样式 */
+.thoughts-text {
+  background: rgba(22, 52, 111, 0.7);
+  color: #ffffff;
+  padding: 20rpx;
+  border-radius: 20rpx 20rpx 20rpx 0;
+  display: inline-block;
+  max-width: 100%;
+  word-wrap: break-word;
+  line-height: 1.4;
+  font-size: 28rpx;
+  box-sizing: border-box;
+  margin-bottom: 15rpx;
+  font-style: italic;
+  box-shadow: 0 2rpx 6rpx rgba(0, 0, 0, 0.1);
+}
+
+/* 思考中文本样式 */
+.thinking-text {
+  background: rgba(169, 169, 169, 0.6);
+  color: #ffffff;
+  padding: 20rpx;
+  border-radius: 20rpx 20rpx 20rpx 0;
+  display: inline-block;
+  max-width: 100%;
+  word-wrap: break-word;
+  line-height: 1.4;
+  font-size: 30rpx;
+  box-sizing: border-box;
+  box-shadow: 0 2rpx 6rpx rgba(0, 0, 0, 0.1);
+}
+
+/* 底部操作区优化 */
+.bottom-area {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 10vh;
+  padding: 40rpx;
+  background-image: linear-gradient(to bottom, #29323c 0%, #485563 100%);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+  z-index: 10;
+  box-shadow: 0 -2rpx 10rpx rgba(0, 0, 0, 0.1);
+}
+
+/* 输入框容器样式 */
+.input-area {
+  flex: 1;
+  height: 80rpx;
+  margin-right: 20rpx;
+}
+
+/* 输入框样式 */
+.input-area input {
+  width: 100%;
+  height: 100%;
+  background: #fff;
+  border: 2rpx solid rgba(45, 41, 52, 0.4);
+  border-radius: 40rpx;
+  padding: 0 30rpx;
+  font-size: 28rpx;
+  color: #333;
+  box-sizing: border-box;
+}
+
+/* 发送按钮样式 */
+.send-btn {
+  width: 80rpx;
+  height: 80rpx;
+  background: rgba(27, 228, 246);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2rpx 6rpx rgba(0, 0, 0, 0.1);
+}
+
+/* 按钮图标样式 */
+.action-btn image {
+  width: 50rpx;
+  height: 50rpx;
+}
+
+/* 禁用状态的按钮 */
+.disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+
+

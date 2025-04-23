@@ -1,0 +1,72 @@
+<!-- pages/ai/emo_book/emo_book.wxml -->
+<!-- 主容器，动态绑定背景样式 -->
+<view class="container" style="{{bgStyle}}">
+  
+  <!-- 添加初始欢迎界面 -->
+  <view class="welcome-section" wx:if="{{chatHistory.length === 0}}">
+    <image class="welcome-icon" src="../image/book.png" mode="aspectFit"></image>
+    <text class="welcome-text">我的内部预装了大量关于心理方面的资料
+    并且会根据您输入的关键词进行检索
+    您可以像对话一样和我交流！</text>
+  </view>
+
+  
+  <!-- 聊天记录展示区域 -->
+  <scroll-view class="chat-box" 
+               scroll-y 
+               scroll-into-view="{{scrollToId}}" 
+               scroll-with-animation>
+    <!-- 循环渲染聊天记录，使用wx:key优化性能 -->
+    <block wx:for="{{chatHistory}}" wx:key="index">
+      <!-- 消息容器，根据发送者切换样式 -->
+      <view class="chat-message {{item.sender === 'user' ? 'user-message' : 'assistant-message'}}" 
+            id="msg{{index}}">
+        <!-- 添加助手头像 -->
+        <image wx:if="{{item.sender === 'assistant'}}" 
+               class="avatar" 
+               src="../image/book.png" 
+               mode="aspectFit">
+        </image>
+        <view class="message-content">
+          <!-- 思考过程消息 -->
+          <block wx:if="{{item.isThoughts}}">
+            <text class="thoughts-text" user-select="true">{{item.content}}</text>
+          </block>
+          <!-- 思考中消息 -->
+          <block wx:elif="{{item.isThinking}}">
+            <text class="thinking-text">{{item.content}}</text>
+          </block>
+          <!-- 默认文本消息展示 -->
+          <block wx:else>
+            <text class="{{item.sender === 'user' ? 'user-text' : 'assistant-text'}}" user-select="true">
+              {{item.content}}
+            </text>
+          </block>
+        </view>
+      </view>
+    </block>
+  </scroll-view>
+
+  <!-- 底部操作栏 -->
+  <view class="bottom-area">
+    <!-- 文本输入框 -->
+    <view class="input-area">
+      <input class="chat-input" 
+             type="text" 
+             placeholder="请输入您想查询的心理学问题"
+             value="{{inputContent}}" 
+             bindinput="onInputChange" 
+             bindfocus="onInputFocus" 
+             bindblur="onInputBlur"
+             disabled="{{pageDisabled}}"/>
+    </view>
+    
+    <!-- 消息发送按钮 -->
+    <view class="send-btn action-btn {{pageDisabled ? 'disabled' : ''}}" 
+          bindtap="{{!pageDisabled ? 'handleSendMessage' : ''}}">
+      <image src="{{resources.sendIcon}}" 
+             mode="aspectFit">
+      </image>
+    </view>
+  </view>
+</view>
